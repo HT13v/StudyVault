@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden; 
+      background-color: #092543c9; 
+    }
+
+    .bubble {
+      position: absolute;
+      background-color: rgba(255, 255, 255, 0.2); 
+      border-radius: 50%;
+      z-index: 2;
+    }
+    @keyframes move-bubble {
+      0% { transform: translateY(0) }
+      50% { transform: translateY(-50px) }
+      100% { transform: translateY(0) }
+    }
+    nav{
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 20px 8%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 2;
+    }
+    nav ul li {
+      list-style: initial;
+      display: inline-block;
+      margin-left: 150px;
+      padding-top: 50px;
+    }
+    nav ul li {
+      font-size: larger;
+      outline: invert;
+    }
+    nav ul li a {
+      color: cornsilk;
+    }
+    nav ul li a:active {
+      color: rgb(109, 221, 34);
+    }
+    nav ul li a:hover {
+      color: rgb(109, 221, 34);
+    }
+    .chart {
+      z-index: 1;
+      padding-top: 100px;
+      justify-content: center;
+      align-items: center;
+      padding-left: 600px;
+    }
+    .container {
+      padding: 20px;
+      margin-top: 50px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #ffffff;
+    }
+    th, td {
+      padding: 15px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style> 
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="loginAdmin.html">HOME</a></li>
+      <li><a href="faqs.html">FAQs</a></li>
+      <li><a href="add_file.html">ADD FILES</a></li>
+      <li><a href="http://192.168.0.107/phpmyadmin/">USER CONTROL</a></li>
+    </ul>
+  </nav>
+
+  <div class="bubble"></div>
+  <br>
+  <div class="chart">
+    <h1>List of registered people</h1>
+  </div>
+  <hr>
+  <div class="container">
+    <table id="usersTable" border="1">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- User data will be inserted here by JavaScript -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const numBubbles = 30; 
+      const container = document.querySelector('.bubble');
+      function getRandomNumber(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+      for (let i = 0; i < numBubbles; i++) {
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble';
+        const size = getRandomNumber(20, 80);
+        bubble.style.width = size + 'px';
+        bubble.style.height = size + 'px';
+        const x = getRandomNumber(0, window.innerWidth);
+        const y = getRandomNumber(0, window.innerHeight);
+        bubble.style.left = x + 'px';
+        bubble.style.top = y + 'px';
+        const duration = getRandomNumber(4, 8);
+        bubble.style.animationDuration = duration + 's';
+        container.appendChild(bubble);
+      }
+
+      // Fetch and display user data
+      fetch('users.php')
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            const users = data.data;
+            const tableBody = document.querySelector('#usersTable tbody');
+            users.forEach(user => {
+              const row = document.createElement('tr');
+              row.innerHTML = `
+                <td>${user.m_id}</td>
+                <td>${user.fname}</td>
+                <td>${user.lname}</td>
+                <td>${user.email}</td>
+              `;
+              tableBody.appendChild(row);
+            });
+          } else {
+            alert(data.message);
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching user data:', error);
+        });
+    });
+  </script>
+</body>
+</html>

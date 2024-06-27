@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SIGN UP</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('files/pic2.png');
+            background-size: cover;
+            background-position: bottom;
+            backface-visibility: visible;
+            background-blend-mode: darken;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        form {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 150px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            color: #ffffff;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input {
+            margin-bottom: 12px;
+        }
+        .pre {
+            padding-top: 300px;
+            padding-left: 20px;
+            color: #ffffff;
+            font-size: 20px;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 5px;
+            color: white;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    <form id="users" method="post" action="signup.php">
+        <div class="content">
+            <label for="ID"><b>Matrix ID</b></label>
+            <input type="text" placeholder="Enter Your ID No" name="m_id" required autofocus>
+
+            <label for="First Name"><b>First Name</b></label>
+            <input type="text" placeholder="Enter Your First Name" name="fname" required>
+
+            <label for="Last Name"><b>Last Name</b></label>
+            <input type="text" placeholder="Enter Your Last Name" name="lname" required>
+
+            <label for="E-mail"><b>E-mail</b></label>
+            <input type="email" placeholder="Enter Your E-mail" name="email" required>
+
+            <label for="psw"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="psw" required>
+            
+            <br>
+            <button type="submit" onclick="submitForm()">Submit</button>
+        </div>
+    </form>
+    <div class="pre">
+        <pre><b>        START YOUR LEARNING WITH US
+        WE WILL PROVIDE ALL THE POSSIBLE HELP THAT WE CAN
+        GET HAND NOTES, PDF, PPTX SLIDES AND MUCH MORE!!!
+        </b></pre>
+    </div>
+    <!-- Popup message -->
+    <div id="popup-message" class="popup"></div>
+
+    <script>
+        function submitForm() {
+            event.preventDefault(); // Prevent form submission to allow AJAX handling
+
+            var form = document.getElementById('users');
+            var formData = new FormData(form);
+
+            // Send form data using AJAX
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'signup.php', true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    // Display response message in popup
+                    document.getElementById('popup-message').innerText = xhr.responseText;
+                    document.getElementById('popup-message').style.display = 'block';
+                }
+            };
+            xhr.send(formData);
+        }
+    </script>
+</body>
+</html>

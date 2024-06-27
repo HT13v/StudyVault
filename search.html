@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search the EduVault</title>
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(45deg, #000000, #00000050, #e88e3ab1);
+        background-size: 200% 200%;
+        animation: gradientBG 15s ease infinite;
+    }
+
+    @keyframes gradientBG {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+
+    .search-form {
+        background: rgba(0, 0, 0, 0.5); 
+        padding: 50px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        color: #ffffff;
+    }
+
+    .select-semester {
+        display: block;
+        margin-bottom: 20px;
+    }
+
+    .select-subjects {
+        display: none;
+        margin-top: 20px;
+    }
+
+    .subject-button {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 5px;
+        border: 1px solid #3498db;
+        border-radius: 5px; 
+        cursor: pointer;
+        transition: background 0.3s ease;
+        color: #3498db;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    .subject-button:hover {
+        background: #3498db;
+        color: #fff;
+    }
+
+    .message {
+        color: red;
+        margin-top: 10px;
+    }
+
+    .content {
+        display: none;
+        margin-top: 20px;
+        padding: 20px;
+        background: #fff;
+        color: #000;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+</style>
+</head>
+<body>
+    <div class="container">
+        <form class="search-form">
+            <div class="select-semester">
+                <label for="semester">Select Semester:</label>
+                <select name="semester" id="semester">
+                    <option value="select" selected>Select Your Semester</option>
+                    <option value="semester1">Semester 1</option>
+                    <option value="semester2">Semester 2</option>
+                    <option value="semester3">Semester 3</option>
+                    <option value="semester4">Semester 4</option>
+                    <option value="semester5">Semester 5</option>
+                    <option value="semester6">Semester 6</option>
+                    <option value="semester7">Semester 7</option>
+                    <option value="semester8">Semester 8</option>
+                </select>
+                <div class="message" id="semesterMessage" style="display:none;">Please choose a semester.</div>
+            </div>
+            <div class="select-subjects"></div>
+            <div class="content" id="content"></div>
+        </form>
+    </div>
+
+    <script>
+        const semesterSelect = document.getElementById('semester');
+        const selectSubjects = document.querySelector('.select-subjects');
+        const semesterMessage = document.getElementById('semesterMessage');
+        const contentDiv = document.getElementById('content');
+
+        const subjects = {
+            semester1: ['CSE-1121', 'CSE-1122', 'EEE-1121', 'EEE-1122', 'MATH-1107', 'PHY-1101', 'UREL-1106', 'UREM-1101'],
+            semester2: ['CSE-1221', 'CSE-1222', 'CSE-1223', 'CSE-1230', 'EEE-1221', 'EEE-1222', 'MATH-1207', 'PHY-1201', 'PHY-1204', 'URED-1201'],
+            semester3: ['CHEM-2301', 'CHEM-2304', 'CSE-2321', 'CSE-2322', 'CSE-2323', 'CSE-2324', 'CSE-2340', 'MATH-2307', 'STAT-2311', 'URED-2302'],
+            semester4: ['ACC-2401', 'CSE-2421', 'CSE-2422', 'CSE-2423', 'CSE-2424', 'CSE-2425', 'CSE-2430', 'MATH-2407', 'ME-2412', 'GEBL-2401'],
+            semester5: ['EEE-2421', 'CSE-3521', 'CSE-3523', 'CSE-3527', 'CSE-3529', 'CSE-3532', 'URED-3503'],
+            semester6: ['subject a', 'subject b', 'subject c', 'subject d'],
+            semester7: ['subject 1', 'subject 2', 'subject a', 'subject a'],
+            semester8: ['subject x', 'subject y']
+        };
+
+        semesterSelect.addEventListener('change', () => {
+            const selectedSemester = semesterSelect.value;
+            if (selectedSemester === 'select') {
+                selectSubjects.style.display = 'none';
+                semesterMessage.style.display = 'block';
+            } else {
+                const semesterSubjects = subjects[selectedSemester];
+                selectSubjects.innerHTML = ''; 
+                semesterSubjects.forEach(subject => {
+                    const subjectLink = document.createElement('a');
+                    subjectLink.classList.add('subject-button');
+                    subjectLink.textContent = subject;
+                    subjectLink.href = `content/${subject.toLowerCase().replace(/ /g, "_")}.pdf`;
+                    subjectLink.target = '_blank'; // Open the link in a new tab
+                    selectSubjects.appendChild(subjectLink);
+                });
+                selectSubjects.style.display = 'block';  
+                semesterMessage.style.display = 'none'; 
+            }
+        });
+    </script>
+</body>
+</html>

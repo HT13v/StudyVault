@@ -1,0 +1,43 @@
+from flask import Flask, render_template, request,flash, redirect, url_for
+import cx_Oracle
+from flask import jsonify
+app = Flask(__name__)
+
+# Replace these values with your Oracle database connection details
+oracle_user = "Humaira"
+oracle_password = "htv"
+oracle_dsn = "XE"  # Oracle Data Source Name
+
+# Database connection function
+def get_db():
+    return cx_Oracle.connect(user=oracle_user, password=oracle_password, dsn=oracle_dsn)
+
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/signup', methods=['POST'])
+def signup():
+    matrix_id = request.form['id']
+    first_name = request.form['Fname']
+    last_name = request.form['lname']
+    email = request.form['email']
+    password = request.form['psw']
+    print(f"Received data: {matrix_id}, {first_name}, {last_name}, {email}, {password}")
+
+    try:
+        # Insert the user information into the database
+        with get_db().cursor() as cursor:
+            cursor.execute("INSERT INTO USERS (matrix_id, first_name, last_name, email, password) "
+                        "VALUES (:matrix_id, :first_name, :last_name, :email, :password)",
+                        matrix_id=matrix_id, first_name=first_name, last_name=last_name,
+                        email=email, password=password)
+            get_db().commit()
+        print("Data inserted successfully")
+    except cx_Oracle.IntegrityError as e:
+        print(f'Duplicate information: {e}')
+    except Exception as e:
+        print(f'Error: {e}')
+if __name__ == '__main__':
+    app.run(debug=True)

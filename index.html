@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IIUC EduVault</title>
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<style>
+    #id01{
+        padding-left: 400px;
+    }
+    #id02{
+        padding-left: 400px;
+        padding-top: 50px;
+        z-index: 2;
+    }
+    #id03{
+        padding-left: 400px;
+        padding-top: 50px;
+        z-index: 2;
+    }
+    .log {
+        padding-left: 400px;
+        background: rgba(0, 0, 0, 0.5); 
+        padding: 150px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(231, 151, 104, 0.5); 
+        color: #ffffff;
+        width: 800px; 
+    }
+    .reset {
+        padding-left: 400px;
+        background: rgba(158, 157, 157, 0.661); 
+        padding: 150px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(230, 149, 108, 0.5); 
+        color: #ffffff;
+        width: 800px; 
+    }
+    .container {
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .container2 {
+        background-color: rgba(0, 0, 0, 0.74);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    input[type="text"],
+    input[type="password"],input[type="email"] {
+        width: 50%;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    button[type="submit"],
+    button.cancelbtn {
+        background-color: #333333;
+        color: darkgrey;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        width: 100%;
+    }
+
+    button[type="submit"]:hover,
+    button.cancelbtn:hover {
+        background-color:darkgrey;
+        color: #f3f3f3;
+    }
+
+    .psw a {
+        text-decoration: none;
+        color: #333;
+    }
+    footer {
+    background-color: #33333300;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    }
+    #iiuc{
+        width: 100px;
+        margin-left: 20px;
+    }
+
+</style>
+<body>
+        <div class="hero">
+            
+            <video autoplay loop muted plays-inline class="back-video">
+                <source src="files/bkg.mp4" type="video/mp4">
+            </video>
+            
+            <nav>
+                <img src="files/logo.png" class="logo">
+                <ul>
+                    <li class="active"><a href="index.html"><i class="fa fa-home"></i>HOME</a></li>
+                    <li class="active"><a href="signup.html"><i class="fa fa-info" ></i>SIGN UP</a></li>
+                    <li class="active"><a href="#" onclick="openHelpLine()"><i class="fa fa-phone"></i>HELPLINE</a></li>
+                </ul>
+            </nav>
+            <div class="content">
+                <h1>IIUC EduVault</h1>
+                <a onclick="document.getElementById('id01').style.display='block'">Start today!</a>
+            </div>
+            
+        </div>
+        <div id="id01" class="modal">
+            
+            <span onclick="document.getElementById('id01').style.display='none'" class="close"
+                title="Close Modal">&times;</span>
+                <form class="log" action="login.php" method="POST">
+                <div class="container">
+                    <label for="email"><b>Email</b></label>
+                    <input type="email" placeholder="Enter Your Email" name="email" required>
+                    <br>
+                    <label for="psw"><b>Password</b></label>
+                    <input type="password" placeholder="Enter Password" name="psw" required>
+                    <br>
+                    <br>
+                    <label>
+                        <input type="checkbox" checked="checked" name="remember"> Remember me
+                    </label>
+                    <br>
+                    <pre>New with us? <a href="signup.html">Sing up</a> today</pre>
+                    <button type="submit"value="login.php">Login</button>
+                    <button type="submit" name="admin_login" value="1">Sign in as Admin</button>
+                    <button type="button"
+                        onclick="document.getElementById('id01').style.display='none'"
+                        class="cancelbtn">Cancel</button>
+                    <br>
+                    <span class="forgotPassword">
+                        <a href="#" onclick="document.getElementById('id02').style.display='block'">Forgot password?</a>
+                    </span>
+                    <script src="server.js"></script>
+                    <script>
+                        document.getElementById('forgotPassword').addEventListener('click', function () 
+                        {
+                            document.getElementById('id01').style.display = 'none';
+                            document.getElementById('id02').style.display = 'block';
+                        });
+                    </script>
+                </div>
+            </form>
+        </div>
+        <div id="id02" class="modal">
+            <span onclick="document.getElementById('id02').style.display='block'" class="close" title="Close Modal">&times;</span> 
+            <form class="reset" action="reset_password.php" method="post">
+                <div class="container2">
+                    <label for="email"><b>Enter your Email Address</b></label>
+                    <input type="email" placeholder="Enter your email" name="email" required>
+                    <br>
+                    <br>
+                    <button type="submit">Send Reset Email</button>
+
+                    <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
+                </div>
+            </form>
+        </div>  
+
+        <div id="id03" class="modal">
+            <span onclick="document.getElementById('id03').style.display='none'" class="close" title="Close Modal">&times;</span>
+            <form class="log" id="helpForm">
+                <div class="container">
+                    <label for="query"><b>Write your query or question:</b></label>
+                    <textarea id="query" name="query" rows="4" cols="50" required></textarea>
+                    <br>
+                    <button type="submit" onclick="submitQuery()">Submit</button>
+                    <button type="button" onclick="document.getElementById('id03').style.display='none'" class="cancelbtn">Cancel</button>
+                </div>
+            </form>
+        </div>
+
+        <script>
+            function openHelpLine() {
+                document.getElementById('id03').style.display = 'block';
+            }
+        
+            function closeHelpLine() {
+                document.getElementById('id03').style.display = 'none';
+            }
+        
+            function submitQuery() {
+            event.preventDefault(); // Prevent the default form submission
+
+            var query = document.getElementById("query").value;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "submit_query.php", true); // Replace "your_php_script.php" with the actual PHP script path
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        alert("Query submitted successfully!");
+                    } else {
+                        alert("Error: " + response.error);
+                    }
+                }
+            };
+
+            xhr.send("query=" + encodeURIComponent(query));
+        }
+
+        </script>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 IIUC EduVault. All rights reserved.</p>
+        </div>
+    </footer>
+    
+</body>
+</html>

@@ -1,0 +1,27 @@
+1st page:
+nice background, 5 contents:
+	home, login/sign up, comment box, contact us
+it will give little info about the mission of this website
+2nd page: (signup/login page)
+a popout sign up page, consisting required sign up info:
+	name, matrix id, email, submit button
+this sing up info will be saved in a SQL and will
+prevent duplication of email and ID no.
+a popout log in page, consisting required info:
+	matrix id, email, log in button
+********after login 3rd page will appear or else break*********
+**************3rd page will be opened in new tab************
+3rd page: (study house)
+select semester:
+	1st to 8th semester
+set searching system
+what are we searching:
+	select from availabe content:
+		Hand note, PDF from course teacher, 
+		Ebook, previous question
+show search results in list
+add download button, and preview PDF
+comment box:
+	will be avilable in every page except signup/login
+contact us: 
+	it will be a popout msg screen 
